@@ -1,69 +1,101 @@
-# Bank Loan Aplication
+# Bank Loan Application
 
-The purpose of this project is to build a potential backend system for bank loan application system. Registered users can create a customer account and apply to loan. The bank loan management system would evaluate their application according to custom bank loan criteria and respond customers if they are available to receive loan, and their loan limit. 
+The purpose of this project is to build a full-stack bank loan application system with a React frontend and Spring Boot backend. Registered users can create a customer account and apply for a loan. The system evaluates their application according to custom bank loan criteria and responds with approval status and loan limit.
 
-
-You can play around directly using the endpoints. 
+You can interact with the application through the React UI or directly via the API endpoints.
 
 For documentation click [here](#api-documentation)
 
 ## Technologies Used
 
+### Backend
+This project implements Spring Boot framework with the following dependencies:
 
-This project implementats Spring Boot framework with given dependencies:
+- **Lombok** → Java annotation library which helps to reduce boilerplate code
+- **Spring Web** → Builds RESTful applications using Spring MVC
+- **Spring Security** → Highly customizable authentication and access-control framework for Spring applications
+- **Spring Data JPA** → Persists data in SQL stores with Java Persistence API using Spring Data and Hibernate
+- **PostgreSQL Driver** → JDBC & R2DBC driver allowing Java programs to connect to PostgreSQL database
+- **Swagger** → OAS REST Documentation
+- **JUnit, Mockito** → Unit Testing
+- **SLF4J** → Logging
 
-- Lombok --> Java annotation library which helps to reduce boilerplate code.
-- Spring Web --> Builds web, including RESTful, applications using Spring MVC
-- Spring Security --> Highly customizable authentication and access-control framework for Spring applications.
-- Spring Data JPA --> Persists data in SQL stores with Java Persistence API using Spring Data and Hibernate
-- PostgreSQL Driver --> JDBC & R2DBC driver allowing Java programs to connect to PostgreSQL database using standart Java code
-- Swagger --> OAS Rest Documentation
-- JUnit, Mockito -> (Unit Testing)
-- SLF4J --> Logging
+### Frontend
+- **React** → Component-based UI for loan application submission, status tracking, and admin dashboard
+- **Axios** → HTTP client for REST API communication between React and Spring Boot
+- **React Router** → Client-side routing for multi-page navigation
 
+## Getting Started
 
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- PostgreSQL
+
+### Backend Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/SIVAPRAKASH5668/bank-loan-approval.git
+
+# Navigate to backend
+cd bank-loan-approval
+
+# Configure your PostgreSQL credentials in application.properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/bankloan
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+# Run the Spring Boot application
+./mvnw spring-boot:run
+```
+
+### Frontend Setup
+
+```bash
+# Navigate to frontend
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the React development server
+npm start
+```
+
+The React app will run on `http://localhost:3000` and the Spring Boot backend on `http://localhost:8080`.
 
 ## API Documentation
 
-You can  asccess it locally by updating baseUrl with your local server port.
+Access Swagger UI locally after starting the backend:
 
-> {{baseUrl}}/swagger-ui/index.html .
-
-![image](https://github.com/SIVAPRAKASH5668/bank-loan-approval/blob/main/src/main/java/com/bankloanapplication/controller/customer-controller.png)
- 
+> `http://localhost:8080/swagger-ui/index.html`
 
 ## API Demonstration
 
-
-
 **Step 1. Register Securely**
 
-| Type | Method |
-| ------ | ------ |
-| POST | https://bank-loan-application-demo.herokuapp.com/api/v1/users/signup |
+| Type | Endpoint |
+|------|----------|
+| POST | `http://localhost:8080/api/v1/users/signup` |
 
 ```json
 {
-    "username":"John Cloud",
-    "email":"john@gmail.com",
-    "password":"12345"
+    "username": "John Cloud",
+    "email": "john@gmail.com",
+    "password": "12345"
 }
 ```
 
 Response Token:
 
->eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2huIENsb3VkIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTY2MDU2MTM1NywiZXhwIjoxNjYwNjQ3NzU3fQ.bkxHd1i1jttct0HVnN8pdCICp38wEKPcKGEoVVrfwso
-
-
+> eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2huIENsb3VkIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTY2MDU2MTM1NywiZXhwIjoxNjYwNjQ3NzU3fQ.bkxHd1i1jttct0HVnN8pdCICp38wEKPcKGEoVVrfwso
 
 **Step 2. Add New Customer**
 
-
-| Type | Method |
-| ------ | ------ |
-| POST | https://bank-loan-application-demo.herokuapp.com/api/v1/customer/add |
-
-Following request will create a bank customer record in the database. 
+| Type | Endpoint |
+|------|----------|
+| POST | `http://localhost:8080/api/v1/customer/add` |
 
 ```json
 {
@@ -75,19 +107,15 @@ Following request will create a bank customer record in the database.
     "monthlyIncome": "10000",
     "gender": "male",
     "age": "{{$randomInt}}",
-    "loanScore":"1000"
+    "loanScore": "1000"
 }
 ```
 
 **Step 3. Check New Customer Information**
 
-| Type | Method |
-| ------ | ------ |
-| GET | https://bank-loan-application-demo.herokuapp.com/api/v1/customer/get/{nationalIdentityNumber} |
-
-
-Following request will return the bank customer with specified national identity number. 
-
+| Type | Endpoint |
+|------|----------|
+| GET | `http://localhost:8080/api/v1/customer/get/{nationalIdentityNumber}` |
 
 ```json
 {
@@ -106,24 +134,17 @@ Following request will return the bank customer with specified national identity
 
 **Step 4. Create New Loan Application**
 
-
-| Type | Method |
-| ------ | ------ |
-| POST | https://bank-loan-application-demo.herokuapp.com/api/v1/loanapplication/create/{nationalIdentityNumber} |
-
+| Type | Endpoint |
+|------|----------|
+| POST | `http://localhost:8080/api/v1/loanapplication/create/{nationalIdentityNumber}` |
 
 **Step 5. Learn Loan Application Result**
 
-
-| Type | Method |
-| ------ | ------ |
-| GET | https://bank-loan-application-demo.herokuapp.com/api/v1/loanapplication/result/{nationalIdentityNumber} |
-
-
-Following request will return an active and approved loan application with loan limit. 
+| Type | Endpoint |
+|------|----------|
+| GET | `http://localhost:8080/api/v1/loanapplication/result/{nationalIdentityNumber}` |
 
 ```json
-
 {
     "id": 21,
     "loanType": "PERSONAL",
@@ -136,118 +157,69 @@ Following request will return an active and approved loan application with loan 
         "id": 5
     }
 }
-
 ```
 
+## Loan Evaluation Cases
 
-#### Case1: 
-New customer with loan score 1000 and more, and monthly income above 5000. The application is approved and loan limit specually calculated.
- 
+#### Case 1:
+Loan score >= 1000 and monthly income > 5000 → **Approved**, loan limit specially calculated.
+
 ```json
 {
-    "id": 17,
-    "loanType": "PERSONAL",
     "loanLimit": 40000.0,
     "loanScoreResult": "APPROVED",
-    "loanStatus": "ACTIVE",
-    "loanDate": "15-08-2025",
-    "creditMultiplier": 4,
-    "loanApplication": {
-        "id": 1
-    }
+    "loanStatus": "ACTIVE"
 }
 ```
 
-#### Case2: 
-
-New customer with loan score between 500 - 1000 and monthly income above 5000. The application is approved and loan limit 20.000 
+#### Case 2:
+Loan score between 500-1000 and monthly income > 5000 → **Approved**, loan limit 20,000.
 
 ```json
-
 {
-    "id": 22,
-    "loanType": "PERSONAL",
     "loanLimit": 20000.0,
     "loanScoreResult": "APPROVED",
-    "loanStatus": "ACTIVE",
-    "loanDate": "15-08-2025",
-    "creditMultiplier": 4,
-    "loanApplication": {
-        "id": 6
-    }
+    "loanStatus": "ACTIVE"
 }
-
 ```
 
-
-#### Case3: 
-
-New customer with loan score between 500 - 1000 and monthly income below 5000. The application is approved and loan limit 10.000 set.
+#### Case 3:
+Loan score between 500-1000 and monthly income <= 5000 → **Approved**, loan limit 10,000.
 
 ```json
-
 {
-    "id": 20,
-    "loanType": "PERSONAL",
     "loanLimit": 10000.0,
     "loanScoreResult": "APPROVED",
-    "loanStatus": "ACTIVE",
-    "loanDate": "15-08-2025",
-    "creditMultiplier": 4,
-    "loanApplication": {
-        "id": 4
-    }
+    "loanStatus": "ACTIVE"
 }
-
 ```
 
-#### Case4: 
-
-New customer with loan score below 500. The application is rejected.
+#### Case 4:
+Loan score < 500 → **Rejected**.
 
 ```json
-
 {
-    "id": 20,
-    "loanType": "PERSONAL",
     "loanLimit": 0.0,
     "loanScoreResult": "REJECTED",
-    "loanStatus": "INACTIVE",
-    "loanDate": "15-08-2025",
-    "creditMultiplier": 4,
-    "loanApplication": {
-        "id": 12
-    }
+    "loanStatus": "INACTIVE"
 }
-
 ```
-
-
-
 
 ## Functional Requirements & Analysis
 
+| **USER STORY ID** | **AS A** | **I WANT TO** | **SO THAT** |
+|-------------------|----------|---------------|-------------|
+| 1 | customer | register to bank loan system | I can create a customer account |
+| 2 | customer | add/update/delete loan application | I can manage my loan application |
+| 3 | customer | browse my loan application(s) | I can see my list of confirmed and rejected loan applications |
+| 4 | customer | login / logout | I can securely enter and leave the system |
+| 5 | admin | register to bank loan system | I can perform as a root user such as employee or bank manager |
+| 6 | admin | view a loan application request | I can review the application information |
+| 7 | admin | confirm / reject | I can respond to the application |
+| 8 | admin | add / update / delete a customer of the bank | I can manage customer records |
+| 9 | admin | send notification to customer | I can notify customer about the outcome of their loan application |
+| 10 | admin | login & logout | I can securely enter and leave the system |
 
-
-| **USER STORY ID** | **AS A** | **I WANT TO**                                | **SO THAT**                                                          |
-|-------------------|----------|----------------------------------------------|----------------------------------------------------------------------|
-| 1                 | customer | register to bank loan system                 | I can create a customer account                                      |
-| 2                 | customer | add/update/delete loan application           | I can manage my loan application                                     | 
-| 3                 | customer | browse my loan application(s)                | I can see my list of confirmed and rejected loan application         | 
-| 4                 | customer | login / logout                               | I can securely enter and leave the system                            | 
-| 5                 | admin    | register to bank loan system                 | I can perform as a root user such as employee or bank manager        |  
-| 6                 | admin    | view a loan application request              | I can review the application information                             |
-| 7                 | admin    | confirm / reject                             | I can respond the application                                        |
-| 8                 | admin    | add / update / delete a customer of the bank | I can manage customer records                                        |
-| 9                 | admin    | send sms to customer                         | I can notify customer about the outcome of his/her loan application  |  
-| 10                | admin    | login & logout                               | I can securely enter and leave the system                            |
-
-
-
-### ERD Database Design
-
-
+## ERD Database Design
 
 ![](https://github.com/gulbalasalamov/bank-loan-application/blob/master/doc/loan-application-erd.png)
-
-
